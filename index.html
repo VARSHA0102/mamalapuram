@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pilgrim Service Selection</title>
+  <title>Mahmallapuram Pilgrim Service</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
@@ -44,6 +44,28 @@
     #dharasanamTimingsSelect {
       display: none;
     }
+
+    /* Hide Audio Language Select initially */
+    #audioLanguageSelect {
+      display: none;
+    }
+
+    /* Styling for the Dharasanam Timings table */
+    #dharasanamTimingsTable {
+      display: none;
+    }
+
+    #dharasanamTimingsTable table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+
+    #dharasanamTimingsTable th, #dharasanamTimingsTable td {
+      border: 1px solid #dee2e6;
+      padding: 8px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -53,8 +75,9 @@
 
   <div class="form-group">
     <label>Pilgrim Service</label>
-    <select class="form-control" id="pilgrimService" onchange="toggleDharasanamTimings()">
-      <option value="stharaPuranam">Sthala Puranam</option>
+    <select class="form-control" id="pilgrimService" onchange="toggleOptions()">
+      <option value="choose" selected disabled>Choose</option>
+      <option value="sthalaPuranam">Sthala Puranam</option>
       <option value="dharasanam">Dharasanam</option>
     </select>
   </div>
@@ -62,6 +85,7 @@
   <div class="form-group" id="audioLanguageSelect">
     <label>Audio Language</label>
     <select class="form-control" id="audioLanguage" onchange="playAudio()">
+      <option value="choose" selected disabled>Choose</option>
       <option value="tamil">Tamil</option>
       <option value="english">English</option>
       <option value="hindi">Hindi</option>
@@ -73,12 +97,22 @@
     </select>
   </div>
 
-  <div class="form-group" id="dharasanamTimingsSelect">
+  <div id="dharasanamTimingsTable">
     <label>Dharasanam Timings</label>
-    <select class="form-control">
-      <option value="monToFri">Monday to Friday 6 am to 8 pm</option>
-      <option value="satAndSun">Saturday and Sunday 8 am to 5 pm</option>
-    </select>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th>Timings</th>
+      </tr>
+      <tr>
+        <td>Monday to Friday</td>
+        <td>6 am to 8 pm</td>
+      </tr>
+      <tr>
+        <td>Saturday and Sunday</td>
+        <td>8 am to 5 pm</td>
+      </tr>
+    </table>
   </div>
 
   <!-- Audio Player -->
@@ -92,14 +126,23 @@
 </div>
 
 <script>
-  function toggleDharasanamTimings() {
-    var dharasanamTimingsSelect = document.getElementById("dharasanamTimingsSelect");
+  function toggleOptions() {
+    var audioLanguageSelect = document.getElementById("audioLanguageSelect");
+    var dharasanamTimingsTable = document.getElementById("dharasanamTimingsTable");
     var pilgrimServiceSelect = document.getElementById("pilgrimService");
 
-    if (pilgrimServiceSelect.value === "dharasanam") {
-      dharasanamTimingsSelect.style.display = "block";
+    // Reset select options
+    document.getElementById("audioLanguage").selectedIndex = 0;
+
+    if (pilgrimServiceSelect.value === "sthalaPuranam") {
+      audioLanguageSelect.style.display = "block";
+      dharasanamTimingsTable.style.display = "none";
+    } else if (pilgrimServiceSelect.value === "dharasanam") {
+      audioLanguageSelect.style.display = "none";
+      dharasanamTimingsTable.style.display = "block";
     } else {
-      dharasanamTimingsSelect.style.display = "none";
+      audioLanguageSelect.style.display = "none";
+      dharasanamTimingsTable.style.display = "none";
     }
   }
 
@@ -146,3 +189,4 @@
 
 </body>
 </html>
+
