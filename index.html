@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilgrim Service Selection</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #007bff;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    /* Styling for the select menus */
+    .form-control {
+      background-color: #e9ecef;
+    }
+
+    /* Styling for the selected options in the select menus */
+    .form-control option {
+      background-color: #ffffff;
+    }
+
+    /* Hide Dharasanam Timings initially */
+    #dharasanamTimingsSelect {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Pilgrim Service Selection</h1>
+
+  <div class="form-group">
+    <label>Pilgrim Service</label>
+    <select class="form-control" id="pilgrimService" onchange="toggleDharasanamTimings()">
+      <option value="stharaPuranam">Sthala Puranam</option>
+      <option value="dharasanam">Dharasanam</option>
+    </select>
+  </div>
+
+  <div class="form-group" id="audioLanguageSelect">
+    <label>Audio Language</label>
+    <select class="form-control" id="audioLanguage" onchange="playAudio()">
+      <option value="tamil">Tamil</option>
+      <option value="english">English</option>
+      <option value="hindi">Hindi</option>
+      <option value="malayalam">Malayalam</option>
+      <option value="telugu">Telugu</option>
+      <option value="chinese">Chinese</option>
+      <option value="france">French</option>
+      <option value="korean">Korean</option>
+    </select>
+  </div>
+
+  <div class="form-group" id="dharasanamTimingsSelect">
+    <label>Dharasanam Timings</label>
+    <select class="form-control">
+      <option value="monToFri">Monday to Friday 6 am to 8 pm</option>
+      <option value="satAndSun">Saturday and Sunday 8 am to 5 pm</option>
+    </select>
+  </div>
+
+  <!-- Audio Player -->
+  <div>
+    <label>Now Playing</label>
+    <audio id="audio" controls>
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+</div>
+
+<script>
+  function toggleDharasanamTimings() {
+    var dharasanamTimingsSelect = document.getElementById("dharasanamTimingsSelect");
+    var pilgrimServiceSelect = document.getElementById("pilgrimService");
+
+    if (pilgrimServiceSelect.value === "dharasanam") {
+      dharasanamTimingsSelect.style.display = "block";
+    } else {
+      dharasanamTimingsSelect.style.display = "none";
+    }
+  }
+
+  function playAudio() {
+    var audioLanguage = document.getElementById("audioLanguage").value;
+    var audioSource = document.getElementById("audio");
+
+    // Set the source of the audio file based on the selected language
+    switch (audioLanguage) {
+      case "tamil":
+        audioSource.src = "ta_audio.mp3";
+        break;
+      case "malayalam":
+        audioSource.src = "ml_audio.mp3";
+        break;
+      case "english":
+        audioSource.src = "en_audio.mp3";
+        break;
+      case "hindi":
+        audioSource.src = "hi_audio.mp3";
+        break;
+      case "telugu":
+        audioSource.src = "te_audio.mp3";
+        break;
+      case "chinese":
+        audioSource.src = "zn-cn_audio.mp3";
+        break;
+      case "france":
+        audioSource.src = "fr_audio.mp3";
+        break;
+      case "korean":
+        audioSource.src = "ko_audio.mp3";
+        break;
+      default:
+        // Hide the audio player for other languages
+        audioSource.src = "";
+        return;
+    }
+
+    // Play the audio
+    audioSource.play();
+  }
+</script>
+
+</body>
+</html>
